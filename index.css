@@ -112,6 +112,43 @@ ul {
     padding-left: 1.2em;
 }
 
+.hooke-quote {
+    position: fixed;
+    right: 1.25em;
+    bottom: 1.25em;
+    max-width: 22em;
+    margin: 0;
+    padding: 0;
+    border: none;
+    font-family: "Times New Roman", Times, Georgia, serif;
+    font-size: 0.72em;
+    line-height: 1.45;
+    color: #b0b0b0;
+    text-align: left;
+}
+
+.hooke-quote p {
+    margin: 0 0 0.75em;
+}
+
+.hooke-quote footer {
+    font-style: normal;
+    letter-spacing: 0.02em;
+}
+
+.hooke-quote cite {
+    font-style: italic;
+}
+
+@media (max-width: 900px) {
+    .hooke-quote {
+        position: static;
+        max-width: 31em;
+        margin: 2.5em auto 2em;
+        padding: 0 1em;
+    }
+}
+
 @media (max-width: 520px) {
     #left,
     #right {
