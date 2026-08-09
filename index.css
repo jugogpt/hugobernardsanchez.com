@@ -1,0 +1,122 @@
+/* GENERAL PAGE RULES */
+
+body {
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size: 1em;
+    margin: 0;
+}
+
+h1 {
+    font-size: 2em;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 1.35em;
+    margin-top: 1.75em;
+    margin-bottom: 0.75em;
+}
+
+h3 {
+    font-size: 1.05em;
+    margin: 0;
+    display: inline;
+}
+
+#holder {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+}
+
+#left {
+    flex-grow: 100;
+    min-width: 1em;
+    max-width: 4em;
+}
+
+#middle {
+    max-width: 31em;
+    width: 100%;
+    padding: 0 1em;
+}
+
+#right {
+    min-width: 1em;
+    flex-grow: 100;
+}
+
+a {
+    color: #660000;
+}
+
+a:hover {
+    color: #400000;
+}
+
+.top-nav {
+    margin: 18px 0 8px;
+    font-size: 0.95em;
+}
+
+.top-nav a {
+    text-decoration: none;
+}
+
+.top-nav a:hover {
+    text-decoration: underline;
+}
+
+.top-nav .sep {
+    color: #660000;
+    margin: 0 0.45em;
+}
+
+.meta {
+    display: block;
+    font-size: 0.9em;
+    margin: 0.35em 0 0.5em;
+    color: #333;
+}
+
+.entry {
+    margin-bottom: 0.25em;
+}
+
+.entry p {
+    margin: 0.35em 0 0.9em;
+}
+
+.entry-header {
+    margin-bottom: 0.15em;
+}
+
+.entry-header a.extra {
+    margin-left: 0.6em;
+    font-size: 0.9em;
+}
+
+hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 0.9em 0 1.1em;
+}
+
+.back {
+    margin-bottom: 1.25em;
+}
+
+ul {
+    padding-left: 1.2em;
+}
+
+@media (max-width: 520px) {
+    #left,
+    #right {
+        display: none;
+    }
+
+    #middle {
+        max-width: none;
+    }
+}
