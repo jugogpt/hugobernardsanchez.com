@@ -27,23 +27,21 @@ h3 {
     margin-top: 48px;
     margin-bottom: 25px;
     display: flex;
+    justify-content: center;
 }
 
-#left {
-    flex-grow: 100;
+#left,
+#right {
+    flex: 1 1 0;
     min-width: 1em;
-    max-width: 4em;
 }
 
 #middle {
-    max-width: 31em;
+    max-width: 42em;
     width: 100%;
     padding: 0 1em;
-}
-
-#right {
-    min-width: 1em;
-    flex-grow: 100;
+    text-align: left;
+    flex: 0 1 42em;
 }
 
 a {
