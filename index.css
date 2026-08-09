@@ -115,7 +115,7 @@ ul {
 .hooke-quote {
     position: fixed;
     right: 5em;
-    bottom: 4em;
+    bottom: calc(4em - 1in);
     width: min(48em, 52vw);
     aspect-ratio: 1;
     max-width: none;
