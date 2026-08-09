@@ -86,8 +86,8 @@ body.home {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 2.5rem;
-    padding: 2.5rem 1.25rem 3rem;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
 }
 
 .home-content {
@@ -99,7 +99,7 @@ body.home .top-nav {
     position: static;
     top: auto;
     right: auto;
-    margin-bottom: 1.25em;
+    margin-bottom: 0.65em;
     text-align: left;
 }
 
@@ -110,12 +110,12 @@ body.home .top-nav {
 
 .home-main h1 {
     text-align: left;
-    margin-bottom: 0.9em;
+    margin-bottom: 0.55em;
 }
 
 .home-main p {
-    line-height: 1.55;
-    margin: 0 0 1em;
+    line-height: 1.5;
+    margin: 0 0 0.7em;
 }
 
 .home-main p:last-child {
@@ -129,6 +129,7 @@ body.home .hooke-quote {
     width: min(52em, 96vw);
     font-size: 0.82em;
     padding: 5em 5.5em;
+    margin-top: -1.5rem;
     flex-shrink: 0;
 }
 
@@ -213,8 +214,8 @@ ul {
     }
 
     .home-shell {
-        justify-content: flex-start;
-        padding-top: 1.75rem;
-        gap: 2rem;
+        justify-content: center;
+        padding-top: 1rem;
+        gap: 0.5rem;
     }
 }
