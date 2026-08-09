@@ -2,8 +2,22 @@
   var body = document.body;
   if (!body) return;
 
-  requestAnimationFrame(function () {
-    body.classList.add("page-ready");
+  var FADE_MS = 150;
+
+  function markReady() {
+    body.classList.remove("page-exit");
+    requestAnimationFrame(function () {
+      body.classList.add("page-ready");
+    });
+  }
+
+  markReady();
+
+  window.addEventListener("pageshow", function (event) {
+    if (event.persisted) {
+      body.classList.remove("page-exit", "click-fade");
+      markReady();
+    }
   });
 
   function isModifiedClick(event) {
@@ -16,7 +30,7 @@
     body.classList.add("click-fade");
     window.setTimeout(function () {
       body.classList.remove("click-fade");
-    }, 420);
+    }, 180);
   }
 
   document.addEventListener("click", function (event) {
@@ -39,9 +53,10 @@
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     event.preventDefault();
+    body.classList.remove("page-ready");
     body.classList.add("page-exit");
     window.setTimeout(function () {
       window.location.href = url.href;
-    }, 180);
+    }, FADE_MS);
   });
 })();

@@ -5,15 +5,19 @@ body {
     font-size: 1em;
     margin: 0;
     background-color: #ffffff;
-    opacity: 0;
-    transition: background-color 0.4s ease, opacity 0.35s ease;
+    transition: background-color 0.15s ease;
 }
 
-body.page-ready {
+.page-fade {
+    opacity: 0;
+    transition: opacity 0.15s ease;
+}
+
+body.page-ready .page-fade {
     opacity: 1;
 }
 
-body.page-exit {
+body.page-exit .page-fade {
     opacity: 0;
 }
 
@@ -23,11 +27,15 @@ body.click-fade {
 
 @media (prefers-reduced-motion: reduce) {
     body {
+        transition: none;
+    }
+
+    .page-fade {
         opacity: 1;
         transition: none;
     }
 
-    body.page-exit {
+    body.page-exit .page-fade {
         opacity: 1;
     }
 }
