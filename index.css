@@ -91,7 +91,7 @@ body.home {
 }
 
 .home-content {
-    width: min(31em, 100%);
+    width: min(42em, 100%);
     text-align: left;
 }
 
@@ -126,7 +126,9 @@ body.home .hooke-quote {
     position: static;
     right: auto;
     bottom: auto;
-    width: min(36em, 92vw);
+    width: min(52em, 96vw);
+    font-size: 0.82em;
+    padding: 5em 5.5em;
     flex-shrink: 0;
 }
 
@@ -169,10 +171,10 @@ ul {
 }
 
 .hooke-quote {
-    width: min(36em, 92vw);
+    width: min(52em, 96vw);
     aspect-ratio: 1;
     margin: 0;
-    padding: 3.75em 4em;
+    padding: 5em 5.5em;
     box-sizing: border-box;
     border: none;
     border-radius: 50%;
@@ -180,7 +182,7 @@ ul {
     flex-direction: column;
     justify-content: center;
     font-family: "Times New Roman", Times, Georgia, serif;
-    font-size: 0.68em;
+    font-size: 0.82em;
     line-height: 1.4;
     color: #b0b0b0;
     text-align: center;
