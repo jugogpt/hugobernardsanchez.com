@@ -4,6 +4,32 @@ body {
     font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
     font-size: 1em;
     margin: 0;
+    background-color: #ffffff;
+    opacity: 0;
+    transition: background-color 0.4s ease, opacity 0.35s ease;
+}
+
+body.page-ready {
+    opacity: 1;
+}
+
+body.page-exit {
+    opacity: 0;
+}
+
+body.click-fade {
+    background-color: #f2eaea;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body {
+        opacity: 1;
+        transition: none;
+    }
+
+    body.page-exit {
+        opacity: 1;
+    }
 }
 
 h1 {
@@ -89,6 +115,8 @@ body.home {
 }
 
 .home-content {
+    position: relative;
+    z-index: 2;
     width: min(42em, 100%);
     text-align: left;
 }
@@ -121,7 +149,8 @@ body.home .top-nav {
 }
 
 body.home .hooke-quote {
-    position: static;
+    position: relative;
+    z-index: 1;
     right: auto;
     bottom: auto;
     width: min(52em, 96vw);
@@ -129,6 +158,7 @@ body.home .hooke-quote {
     padding: 5em 5.5em;
     margin-top: -4.5rem;
     flex-shrink: 0;
+    pointer-events: none;
 }
 
 .meta {
