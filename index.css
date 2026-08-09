@@ -90,20 +90,26 @@ body.home {
     padding: 2.5rem 1.25rem 3rem;
 }
 
+.home-content {
+    width: min(31em, 100%);
+    text-align: left;
+}
+
 body.home .top-nav {
     position: static;
     top: auto;
     right: auto;
-    text-align: center;
+    margin-bottom: 1.25em;
+    text-align: left;
 }
 
 .home-main {
-    width: min(34em, 100%);
+    width: 100%;
     text-align: left;
 }
 
 .home-main h1 {
-    text-align: center;
+    text-align: left;
     margin-bottom: 0.9em;
 }
 
