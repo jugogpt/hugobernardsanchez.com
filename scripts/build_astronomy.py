@@ -96,7 +96,7 @@ def slugify(title: str) -> str:
 
 
 NAV = """    <nav class="top-nav" aria-label="Primary">
-        <a href="../projects.html">projects</a><span class="sep">&middot;</span><a href="../experience.html">experience</a>
+        <a href="/projects">projects</a><span class="sep">&middot;</span><a href="/experience">experience</a>
     </nav>"""
 
 
@@ -108,8 +108,8 @@ PAGE_SHELL = """<!DOCTYPE html>
     <meta name="description" content="{description}">
     <meta name="author" content="Hugo Sanchez">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../index.css">
-    <link rel="stylesheet" href="astronomy.css">
+    <link rel="stylesheet" href="/index.css">
+    <link rel="stylesheet" href="/astronomy/astronomy.css">
     <script>
       MathJax = {{
         tex: {{ inlineMath: [['$', '$'], ['\\\\(', '\\\\)']], displayMath: [['$$', '$$'], ['\\\\[', '\\\\]']] }},
@@ -163,8 +163,8 @@ def split_chapters(full_html: str) -> list[tuple[str, str]]:
 
 
 def rewrite_images(fragment: str) -> str:
-    # Pandoc may emit src="images/..." already; keep relative.
-    fragment = fragment.replace('src="images/', 'src="images/')
+    # Root-relative image paths so cleanUrls pages without a trailing slash still work.
+    fragment = fragment.replace('src="images/', 'src="/astronomy/images/')
     fragment = re.sub(
         r'<img([^>]*?)style="[^"]*"',
         r"<img\1",
@@ -215,14 +215,15 @@ def main() -> int:
 
     # Index
     items = []
-    chapter_files: list[tuple[str, str, str]] = []
+    chapter_files: list[tuple[str, str, str, str]] = []
     for i, (title, body) in enumerate(chapters, start=1):
         slug = f"{i:02d}-{slugify(title)}"
         filename = f"{slug}.html"
-        chapter_files.append((title, filename, body))
-        items.append(f'            <li><a href="{filename}">{html.escape(title)}</a></li>')
+        href = f"/astronomy/{slug}"
+        chapter_files.append((title, filename, href, body))
+        items.append(f'            <li><a href="{href}">{html.escape(title)}</a></li>')
 
-    index_body = f"""            <p class="back"><a href="../projects.html">&larr; Projects</a></p>
+    index_body = f"""            <p class="back"><a href="/projects">&larr; Projects</a></p>
             <h1>Astronomy: General Theory</h1>
             <p class="lede">A stellar-evolution textbook draft, converted from LaTeX into a readable web version with figures and equations.</p>
             <h2>Chapters</h2>
@@ -234,18 +235,18 @@ def main() -> int:
         encoding="utf-8",
     )
 
-    for idx, (title, filename, body) in enumerate(chapter_files):
+    for idx, (title, filename, href, body) in enumerate(chapter_files):
         body = rewrite_images(body)
         prev_link = ""
         next_link = ""
         if idx > 0:
-            prev_title, prev_file, _ = chapter_files[idx - 1]
-            prev_link = f'<a href="{prev_file}">&larr; {html.escape(prev_title)}</a>'
+            prev_title, _, prev_href, _ = chapter_files[idx - 1]
+            prev_link = f'<a href="{prev_href}">&larr; {html.escape(prev_title)}</a>'
         if idx < len(chapter_files) - 1:
-            next_title, next_file, _ = chapter_files[idx + 1]
-            next_link = f'<a href="{next_file}">{html.escape(next_title)} &rarr;</a>'
+            next_title, _, next_href, _ = chapter_files[idx + 1]
+            next_link = f'<a href="{next_href}">{html.escape(next_title)} &rarr;</a>'
 
-        chapter_body = f"""            <p class="back"><a href="index.html">&larr; All chapters</a></p>
+        chapter_body = f"""            <p class="back"><a href="/astronomy">&larr; All chapters</a></p>
             <h1>{html.escape(title)}</h1>
             <article class="chapter">
 {body}
