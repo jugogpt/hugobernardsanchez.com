@@ -24,7 +24,7 @@ h3 {
 }
 
 #holder {
-    margin-top: 25px;
+    margin-top: 48px;
     margin-bottom: 25px;
     display: flex;
 }
@@ -55,7 +55,9 @@ a:hover {
 }
 
 .top-nav {
-    margin: 18px 0 8px;
+    position: absolute;
+    top: 18px;
+    right: 1.25em;
     font-size: 0.95em;
 }
 
