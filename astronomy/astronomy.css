@@ -1,0 +1,66 @@
+.blog-middle {
+    max-width: 40em;
+}
+
+.lede {
+    margin-top: 0.25em;
+}
+
+.chapter-list {
+    padding-left: 1.25em;
+    line-height: 1.7;
+}
+
+.chapter img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 1em 0;
+}
+
+.chapter figure {
+    margin: 1.25em 0;
+}
+
+.chapter figcaption,
+.chapter .caption {
+    font-size: 0.92em;
+    color: #333;
+    margin-top: 0.4em;
+}
+
+.chapter h2 {
+    margin-top: 1.8em;
+}
+
+.chapter h3 {
+    display: block;
+    margin-top: 1.3em;
+    margin-bottom: 0.4em;
+}
+
+.chapter p {
+    line-height: 1.55;
+}
+
+.chapter-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+    margin-top: 2.5em;
+    margin-bottom: 2em;
+    font-size: 0.95em;
+}
+
+.chapter-nav a {
+    text-decoration: none;
+}
+
+.chapter-nav a:hover {
+    text-decoration: underline;
+}
+
+.mjx-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+}
