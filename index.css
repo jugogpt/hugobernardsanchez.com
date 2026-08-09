@@ -74,6 +74,56 @@ a:hover {
     margin: 0 0.45em;
 }
 
+/* Home: centered stack */
+body.home {
+    min-height: 100vh;
+}
+
+.home-shell {
+    min-height: 100vh;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+    padding: 2.5rem 1.25rem 3rem;
+}
+
+body.home .top-nav {
+    position: static;
+    top: auto;
+    right: auto;
+    text-align: center;
+}
+
+.home-main {
+    width: min(34em, 100%);
+    text-align: left;
+}
+
+.home-main h1 {
+    text-align: center;
+    margin-bottom: 0.9em;
+}
+
+.home-main p {
+    line-height: 1.55;
+    margin: 0 0 1em;
+}
+
+.home-main p:last-child {
+    margin-bottom: 0;
+}
+
+body.home .hooke-quote {
+    position: static;
+    right: auto;
+    bottom: auto;
+    width: min(36em, 92vw);
+    flex-shrink: 0;
+}
+
 .meta {
     display: block;
     font-size: 0.9em;
@@ -113,14 +163,10 @@ ul {
 }
 
 .hooke-quote {
-    position: fixed;
-    right: 5em;
-    bottom: calc(4em - 1in);
-    width: min(48em, 52vw);
+    width: min(36em, 92vw);
     aspect-ratio: 1;
-    max-width: none;
     margin: 0;
-    padding: 4.5em 5em;
+    padding: 3.75em 4em;
     box-sizing: border-box;
     border: none;
     border-radius: 50%;
@@ -148,15 +194,6 @@ ul {
     font-style: italic;
 }
 
-@media (max-width: 900px) {
-    .hooke-quote {
-        position: static;
-        width: min(28em, 90vw);
-        margin: 2.5em auto 2em;
-        padding: 3.5em 3.25em;
-    }
-}
-
 @media (max-width: 520px) {
     #left,
     #right {
@@ -165,5 +202,11 @@ ul {
 
     #middle {
         max-width: none;
+    }
+
+    .home-shell {
+        justify-content: flex-start;
+        padding-top: 1.75rem;
+        gap: 2rem;
     }
 }
