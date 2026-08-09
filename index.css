@@ -114,17 +114,25 @@ ul {
 
 .hooke-quote {
     position: fixed;
-    right: 6em;
-    bottom: 6em;
-    max-width: 42em;
+    right: 5em;
+    bottom: 4em;
+    width: min(48em, 52vw);
+    aspect-ratio: 1;
+    max-width: none;
     margin: 0;
-    padding: 0;
+    padding: 4.5em 5em;
+    box-sizing: border-box;
     border: none;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     font-family: "Times New Roman", Times, Georgia, serif;
-    font-size: 0.72em;
-    line-height: 1.45;
+    font-size: 0.68em;
+    line-height: 1.4;
     color: #b0b0b0;
-    text-align: left;
+    text-align: center;
+    overflow: hidden;
 }
 
 .hooke-quote p {
@@ -143,9 +151,9 @@ ul {
 @media (max-width: 900px) {
     .hooke-quote {
         position: static;
-        max-width: 31em;
+        width: min(28em, 90vw);
         margin: 2.5em auto 2em;
-        padding: 0 1em;
+        padding: 3.5em 3.25em;
     }
 }
 
