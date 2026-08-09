@@ -108,6 +108,7 @@ PAGE_SHELL = """<!DOCTYPE html>
     <meta name="description" content="{description}">
     <meta name="author" content="Hugo Sanchez">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="/favicon.png" type="image/png">
     <link rel="stylesheet" href="/index.css">
     <link rel="stylesheet" href="/astronomy/astronomy.css">
     <script>
