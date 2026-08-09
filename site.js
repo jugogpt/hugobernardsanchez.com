@@ -2,35 +2,42 @@
   var body = document.body;
   if (!body) return;
 
-  var FADE_MS = 150;
+  var SWIPE_MS = 220;
+  var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  function markReady() {
-    body.classList.remove("page-exit");
+  function revealPage() {
+    body.classList.remove("page-exit", "swipe-out", "swipe-reveal");
+    body.classList.add("swipe-cover");
+
     requestAnimationFrame(function () {
-      body.classList.add("page-ready");
+      requestAnimationFrame(function () {
+        body.classList.add("page-ready", "swipe-reveal");
+        window.setTimeout(function () {
+          body.classList.remove("swipe-cover", "swipe-reveal");
+        }, SWIPE_MS);
+      });
     });
   }
 
-  markReady();
+  if (reduced) {
+    body.classList.add("page-ready");
+  } else {
+    revealPage();
+  }
 
   window.addEventListener("pageshow", function (event) {
     if (event.persisted) {
-      body.classList.remove("page-exit", "click-fade");
-      markReady();
+      body.classList.remove("page-exit", "swipe-out");
+      if (reduced) {
+        body.classList.add("page-ready");
+      } else {
+        revealPage();
+      }
     }
   });
 
   function isModifiedClick(event) {
     return event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0;
-  }
-
-  function flashBackground() {
-    body.classList.remove("click-fade");
-    void body.offsetWidth;
-    body.classList.add("click-fade");
-    window.setTimeout(function () {
-      body.classList.remove("click-fade");
-    }, 180);
   }
 
   document.addEventListener("click", function (event) {
@@ -47,16 +54,13 @@
 
     var sameOrigin = url.origin === window.location.origin;
     var newTab = link.target === "_blank";
-    flashBackground();
-
-    if (!sameOrigin || newTab) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!sameOrigin || newTab || reduced) return;
 
     event.preventDefault();
-    body.classList.remove("page-ready");
-    body.classList.add("page-exit");
+    body.classList.remove("page-ready", "swipe-cover", "swipe-reveal");
+    body.classList.add("page-exit", "swipe-out");
     window.setTimeout(function () {
       window.location.href = url.href;
-    }, FADE_MS);
+    }, SWIPE_MS);
   });
 })();

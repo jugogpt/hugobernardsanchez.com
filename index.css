@@ -5,38 +5,65 @@ body {
     font-size: 1em;
     margin: 0;
     background-color: #ffffff;
-    transition: background-color 0.15s ease;
+    overflow-x: hidden;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: #e4cfcf;
+    transform: translateX(-101%);
+    transition: transform 0.22s ease;
+    pointer-events: none;
+    z-index: 9999;
+}
+
+body.swipe-cover::after {
+    transform: translateX(0);
+    transition: none;
+}
+
+body.swipe-reveal::after {
+    transform: translateX(101%);
+    transition: transform 0.22s ease;
+}
+
+body.swipe-out::after {
+    transform: translateX(0);
+    transition: transform 0.22s ease;
 }
 
 .page-fade {
     opacity: 0;
-    transition: opacity 0.15s ease;
+    transform: translateX(16px);
+    transition: opacity 0.22s ease, transform 0.22s ease;
 }
 
 body.page-ready .page-fade {
     opacity: 1;
+    transform: translateX(0);
 }
 
 body.page-exit .page-fade {
     opacity: 0;
-}
-
-body.click-fade {
-    background-color: #f2eaea;
+    transform: translateX(-22px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    body {
-        transition: none;
+    body::after {
+        display: none;
     }
 
     .page-fade {
         opacity: 1;
+        transform: none;
         transition: none;
     }
 
     body.page-exit .page-fade {
         opacity: 1;
+        transform: none;
     }
 }
 
