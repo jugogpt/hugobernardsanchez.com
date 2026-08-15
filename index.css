@@ -114,6 +114,8 @@ a:hover {
 }
 
 .top-nav {
+    /* Temporary: hide projects/experience navigation */
+    display: none;
     position: absolute;
     top: 18px;
     right: 1.25em;
