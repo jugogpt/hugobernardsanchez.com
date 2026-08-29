@@ -185,15 +185,15 @@ body.home .top-nav {
     margin-bottom: 0;
 }
 
-body.home .hooke-quote {
+body.home .site-quote {
     position: relative;
     z-index: 1;
     right: auto;
     bottom: auto;
-    width: min(52em, 96vw);
-    font-size: 0.82em;
-    padding: 5em 5.5em;
-    margin-top: -4.5rem;
+    width: min(28em, 90vw);
+    font-size: 1em;
+    padding: 2.75em 2.5em;
+    margin-top: 1.5rem;
     flex-shrink: 0;
     pointer-events: none;
 }
@@ -236,11 +236,30 @@ ul {
     padding-left: 1.2em;
 }
 
-.hooke-quote {
-    width: min(52em, 96vw);
+.views-counter {
+    position: fixed;
+    top: 18px;
+    left: 1.25em;
+    z-index: 3;
+    font-family: "Century Gothic", CenturyGothic, Geneva, AppleGothic, sans-serif;
+    font-size: 0.9em;
+    color: #9a9a9a;
+    letter-spacing: 0.02em;
+}
+
+.views-counter .views-label {
+    margin-right: 0.4em;
+}
+
+.views-counter .views-count {
+    font-variant-numeric: tabular-nums;
+}
+
+.site-quote {
+    width: min(28em, 90vw);
     aspect-ratio: 1;
     margin: 0;
-    padding: 5em 5.5em;
+    padding: 2.75em 2.5em;
     box-sizing: border-box;
     border: none;
     border-radius: 50%;
@@ -248,23 +267,23 @@ ul {
     flex-direction: column;
     justify-content: center;
     font-family: "Times New Roman", Times, Georgia, serif;
-    font-size: 0.82em;
-    line-height: 1.4;
+    font-size: 1em;
+    line-height: 1.45;
     color: #b0b0b0;
     text-align: center;
     overflow: hidden;
 }
 
-.hooke-quote p {
+.site-quote p {
     margin: 0 0 0.75em;
 }
 
-.hooke-quote footer {
+.site-quote footer {
     font-style: normal;
     letter-spacing: 0.02em;
 }
 
-.hooke-quote cite {
+.site-quote cite {
     font-style: italic;
 }
 
@@ -284,7 +303,10 @@ ul {
         gap: 0;
     }
 
-    body.home .hooke-quote {
-        margin-top: -3rem;
+    body.home .site-quote {
+        margin-top: 1rem;
+        width: min(22em, 88vw);
+        padding: 2.25em 2em;
+        font-size: 0.95em;
     }
 }

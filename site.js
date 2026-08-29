@@ -4,6 +4,9 @@
 
   var SWIPE_MS = 220;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var COUNTER_HIT = "https://abacus.jasoncameron.dev/hit/hugobsanchez.com/home";
+  var COUNTER_GET = "https://abacus.jasoncameron.dev/get/hugobsanchez.com/home";
+  var POLL_MS = 12000;
 
   function revealPage() {
     body.classList.remove("page-exit", "swipe-out", "swipe-reveal");
@@ -63,4 +66,41 @@
       window.location.href = url.href;
     }, SWIPE_MS);
   });
+
+  function formatCount(n) {
+    return Number(n).toLocaleString("en-US");
+  }
+
+  function setViews(n) {
+    var el = document.getElementById("views-count");
+    if (!el || n == null || isNaN(n)) return;
+    el.textContent = formatCount(n);
+  }
+
+  function fetchJson(url) {
+    return fetch(url, { cache: "no-store" }).then(function (res) {
+      if (!res.ok) throw new Error("counter failed");
+      return res.json();
+    });
+  }
+
+  function refreshViews(increment) {
+    var url = increment ? COUNTER_HIT : COUNTER_GET;
+    return fetchJson(url)
+      .then(function (data) {
+        if (data && typeof data.value === "number") {
+          setViews(data.value);
+        }
+      })
+      .catch(function () {
+        /* keep current display */
+      });
+  }
+
+  if (document.getElementById("views-count")) {
+    refreshViews(true);
+    window.setInterval(function () {
+      refreshViews(false);
+    }, POLL_MS);
+  }
 })();
