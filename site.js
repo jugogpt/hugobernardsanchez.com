@@ -7,6 +7,7 @@
   var COUNTER_HIT = "https://abacus.jasoncameron.dev/hit/hugobsanchez.com/home";
   var COUNTER_GET = "https://abacus.jasoncameron.dev/get/hugobsanchez.com/home";
   var POLL_MS = 12000;
+  var currentViews = null;
 
   function revealPage() {
     body.classList.remove("page-exit", "swipe-out", "swipe-reveal");
@@ -71,10 +72,73 @@
     return Number(n).toLocaleString("en-US");
   }
 
-  function setViews(n) {
+  function ensureDigitSlot(container, index, isSep) {
+    var slots = container.children;
+    var slot = slots[index];
+    if (!slot || slot.classList.contains("is-sep") !== isSep) {
+      slot = document.createElement("span");
+      slot.className = isSep ? "digit-slot is-sep" : "digit-slot";
+      if (isSep) {
+        slot.innerHTML = '<span class="digit-sep">,</span>';
+      } else {
+        var reel = document.createElement("span");
+        reel.className = "digit-reel";
+        for (var d = 0; d <= 9; d++) {
+          var span = document.createElement("span");
+          span.textContent = String(d);
+          reel.appendChild(span);
+        }
+        slot.appendChild(reel);
+      }
+      if (slots[index]) {
+        container.replaceChild(slot, slots[index]);
+      } else {
+        container.appendChild(slot);
+      }
+    }
+    return slot;
+  }
+
+  function setDigit(slot, digit, animate) {
+    var reel = slot.querySelector(".digit-reel");
+    if (!reel) return;
+    var offset = -digit * 1.15;
+    if (!animate || reduced) {
+      reel.style.transition = "none";
+      reel.style.transform = "translateY(" + offset + "em)";
+      void reel.offsetHeight;
+      reel.style.transition = "";
+    } else {
+      reel.style.transform = "translateY(" + offset + "em)";
+    }
+  }
+
+  function renderViews(n, animate) {
     var el = document.getElementById("views-count");
     if (!el || n == null || isNaN(n)) return;
-    el.textContent = formatCount(n);
+
+    var text = formatCount(n);
+    el.setAttribute("aria-label", text + " views");
+
+    while (el.children.length > text.length) {
+      el.removeChild(el.lastChild);
+    }
+
+    for (var i = 0; i < text.length; i++) {
+      var ch = text.charAt(i);
+      if (ch === ",") {
+        ensureDigitSlot(el, i, true);
+      } else {
+        var slot = ensureDigitSlot(el, i, false);
+        setDigit(slot, parseInt(ch, 10), animate);
+      }
+    }
+  }
+
+  function setViews(n) {
+    var animate = currentViews !== null && n !== currentViews;
+    currentViews = n;
+    renderViews(n, animate);
   }
 
   function fetchJson(url) {
