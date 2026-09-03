@@ -99,25 +99,34 @@
     return slot;
   }
 
-  function setDigit(slot, digit, animate) {
+  function setDigit(slot, digit, animate, fromDigit) {
     var reel = slot.querySelector(".digit-reel");
     if (!reel) return;
-    var offset = -digit * 1.15;
+    var end = -digit * 1.15;
     if (!animate || reduced) {
       reel.style.transition = "none";
-      reel.style.transform = "translateY(" + offset + "em)";
+      reel.style.transform = "translateY(" + end + "em)";
       void reel.offsetHeight;
       reel.style.transition = "";
-    } else {
-      reel.style.transform = "translateY(" + offset + "em)";
+      return;
     }
+
+    var startDigit = typeof fromDigit === "number" ? fromDigit : 0;
+    reel.style.transition = "none";
+    reel.style.transform = "translateY(" + -startDigit * 1.15 + "em)";
+    void reel.offsetHeight;
+    reel.style.transition = "";
+    requestAnimationFrame(function () {
+      reel.style.transform = "translateY(" + end + "em)";
+    });
   }
 
-  function renderViews(n, animate) {
+  function renderViews(n, animate, fromN) {
     var el = document.getElementById("views-count");
     if (!el || n == null || isNaN(n)) return;
 
     var text = formatCount(n);
+    var fromText = fromN != null && !isNaN(fromN) ? formatCount(fromN) : "";
     el.setAttribute("aria-label", text + " views");
 
     while (el.children.length > text.length) {
@@ -130,15 +139,47 @@
         ensureDigitSlot(el, i, true);
       } else {
         var slot = ensureDigitSlot(el, i, false);
-        setDigit(slot, parseInt(ch, 10), animate);
+        var fromCh = fromText.length === text.length ? fromText.charAt(i) : "0";
+        var fromDigit = fromCh >= "0" && fromCh <= "9" ? parseInt(fromCh, 10) : 0;
+        setDigit(slot, parseInt(ch, 10), animate, fromDigit);
       }
     }
   }
 
   function setViews(n) {
-    var animate = currentViews !== null && n !== currentViews;
+    var STORAGE_KEY = "hugobsanchez-views";
+    var prev = currentViews;
+
+    if (prev === null) {
+      try {
+        var stored = sessionStorage.getItem(STORAGE_KEY);
+        if (stored != null) prev = parseInt(stored, 10);
+      } catch (err) {}
+      if (prev === null || isNaN(prev)) {
+        prev = Math.max(0, n - 1);
+      }
+
+      currentViews = prev;
+      renderViews(prev, false);
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          currentViews = n;
+          renderViews(n, true, prev);
+          try {
+            sessionStorage.setItem(STORAGE_KEY, String(n));
+          } catch (err2) {}
+        });
+      });
+      return;
+    }
+
+    if (n === currentViews) return;
+    var old = currentViews;
     currentViews = n;
-    renderViews(n, animate);
+    renderViews(n, true, old);
+    try {
+      sessionStorage.setItem(STORAGE_KEY, String(n));
+    } catch (err3) {}
   }
 
   function fetchJson(url) {
