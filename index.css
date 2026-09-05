@@ -191,15 +191,16 @@ body.home .top-nav {
 .home-main h1 {
     text-align: left;
     margin-bottom: 0.55em;
-    line-height: 1.15;
+    line-height: 1.35;
 }
 
 .home-main h1 .name-orb {
-    height: 0.92em;
+    /* ~2x prior size; H glyph sits above image bottom (~28% padding) */
+    height: 1.84em;
     width: auto;
     display: inline-block;
-    vertical-align: -0.08em;
-    margin-right: 0.01em;
+    vertical-align: -0.51em;
+    margin-right: 0.04em;
 }
 
 .home-main p {
