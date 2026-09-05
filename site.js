@@ -208,4 +208,33 @@
       refreshViews(false);
     }, POLL_MS);
   }
+
+  // Silent private visit log — never blocks UI.
+  function logVisit() {
+    var payload = JSON.stringify({
+      path: location.pathname + location.search,
+      referrer: document.referrer || "",
+      language: navigator.language || "",
+    });
+    try {
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon(
+          "/api/visit",
+          new Blob([payload], { type: "application/json" })
+        );
+        return;
+      }
+    } catch (err) {}
+    try {
+      fetch("/api/visit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: payload,
+        keepalive: true,
+        cache: "no-store",
+      }).catch(function () {});
+    } catch (err2) {}
+  }
+
+  setTimeout(logVisit, 0);
 })();
