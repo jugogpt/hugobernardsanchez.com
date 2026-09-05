@@ -191,6 +191,15 @@ body.home .top-nav {
 .home-main h1 {
     text-align: left;
     margin-bottom: 0.55em;
+    line-height: 1.15;
+}
+
+.home-main h1 .name-orb {
+    height: 0.92em;
+    width: auto;
+    display: inline-block;
+    vertical-align: -0.08em;
+    margin-right: 0.01em;
 }
 
 .home-main p {
