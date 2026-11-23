@@ -383,11 +383,13 @@ ul {
 }
 
 .friends-marquee {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 0.6rem;
+    width: max-content;
     white-space: nowrap;
-    animation: friends-marquee 10s linear infinite;
+    will-change: transform;
+    animation: friends-marquee 14s linear infinite;
 }
 
 .friends-marquee a {

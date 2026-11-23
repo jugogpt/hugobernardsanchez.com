@@ -5,8 +5,11 @@
   var SWIPE_MS = 220;
   var reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var COUNTER_HIT = "https://abacus.jasoncameron.dev/hit/hugobsanchez.com/home";
-  var COUNTER_GET = "https://abacus.jasoncameron.dev/get/hugobsanchez.com/home";
+  // /info is more reliable than /get (which has been returning intermittent 500s)
+  var COUNTER_GET = "https://abacus.jasoncameron.dev/info/hugobsanchez.com/home";
   var POLL_MS = 12000;
+  var FETCH_MS = 8000;
+  var STORAGE_KEY = "hugobsanchez-views";
   var currentViews = null;
 
   function revealPage() {
@@ -146,15 +149,25 @@
     }
   }
 
+  function readStoredViews() {
+    try {
+      var stored = sessionStorage.getItem(STORAGE_KEY);
+      if (stored != null) {
+        var parsed = parseInt(stored, 10);
+        if (!isNaN(parsed)) return parsed;
+      }
+    } catch (err) {}
+    return null;
+  }
+
   function setViews(n) {
-    var STORAGE_KEY = "hugobsanchez-views";
+    n = Number(n);
+    if (isNaN(n)) return;
     var prev = currentViews;
 
     if (prev === null) {
-      try {
-        var stored = sessionStorage.getItem(STORAGE_KEY);
-        if (stored != null) prev = parseInt(stored, 10);
-      } catch (err) {}
+      var stored = readStoredViews();
+      if (stored !== null) prev = stored;
       if (prev === null || isNaN(prev)) {
         prev = Math.max(0, n - 1);
       }
@@ -183,26 +196,63 @@
   }
 
   function fetchJson(url) {
-    return fetch(url, { cache: "no-store" }).then(function (res) {
-      if (!res.ok) throw new Error("counter failed");
-      return res.json();
-    });
+    var ctrl = typeof AbortController !== "undefined" ? new AbortController() : null;
+    var timer =
+      ctrl &&
+      window.setTimeout(function () {
+        ctrl.abort();
+      }, FETCH_MS);
+
+    return fetch(url, {
+      cache: "no-store",
+      signal: ctrl ? ctrl.signal : undefined,
+    })
+      .then(function (res) {
+        if (!res.ok) throw new Error("counter failed");
+        return res.json();
+      })
+      .finally(function () {
+        if (timer) window.clearTimeout(timer);
+      });
+  }
+
+  function parseCounterValue(data) {
+    if (!data) return null;
+    var v = data.value;
+    if (typeof v === "number" && !isNaN(v)) return v;
+    if (typeof v === "string" && v.trim() !== "") {
+      var n = Number(v);
+      if (!isNaN(n)) return n;
+    }
+    return null;
   }
 
   function refreshViews(increment) {
     var url = increment ? COUNTER_HIT : COUNTER_GET;
     return fetchJson(url)
       .then(function (data) {
-        if (data && typeof data.value === "number") {
-          setViews(data.value);
-        }
+        var value = parseCounterValue(data);
+        if (value != null) setViews(value);
       })
       .catch(function () {
-        /* keep current display */
+        // Abacus /get has been flaky; try /hit only on first paint fallback already done via cache
+        if (increment) {
+          return fetchJson("https://abacus.jasoncameron.dev/get/hugobsanchez.com/home")
+            .then(function (data) {
+              var value = parseCounterValue(data);
+              if (value != null) setViews(value);
+            })
+            .catch(function () {});
+        }
       });
   }
 
   if (document.getElementById("views-count")) {
+    var cached = readStoredViews();
+    if (cached !== null) {
+      currentViews = cached;
+      renderViews(cached, false);
+    }
     refreshViews(true);
     window.setInterval(function () {
       refreshViews(false);
